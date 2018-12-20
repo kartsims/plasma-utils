@@ -7,7 +7,7 @@ class Node {
   }
 }
 
-class MerkleSum {
+class MerkleSumTree {
   constructor (leaves) {
     if (!leaves) {
       leaves = []
@@ -50,4 +50,4 @@ class MerkleSum {
   }
 }
 
-module.exports = MerkleSum
+module.exports = MerkleSumTree

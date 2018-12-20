@@ -1,14 +1,14 @@
 /* global describe it */
 const assert = require('chai').assert
-const MerkleSum = require('../lib/merkle-sum')
+const MerkleSumTree = require('../src/merkle-sum')
 
-describe('MerkleSum', function () {
+describe('MerkleSumTree', function () {
   it('should return undefined for an empty tree', function () {
-    const ms = new MerkleSum()
+    const ms = new MerkleSumTree()
     assert.strictEqual(ms.root(), undefined)
   })
   it('should generate a single-leaf tree correctly', function () {
-    const ms = new MerkleSum([
+    const ms = new MerkleSumTree([
       {
         data: 'Hello',
         sum: 1
@@ -19,7 +19,7 @@ describe('MerkleSum', function () {
     assert.strictEqual(root.sum, 1)
   })
   it('should generate an even tree correctly', function () {
-    const ms = new MerkleSum([
+    const ms = new MerkleSumTree([
       {
         data: 'Hello',
         sum: 1
@@ -34,7 +34,7 @@ describe('MerkleSum', function () {
     assert.strictEqual(root.sum, 3)
   })
   it('should generate an odd tree correctly', function () {
-    const ms = new MerkleSum([
+    const ms = new MerkleSumTree([
       {
         data: 'Hello',
         sum: 1
