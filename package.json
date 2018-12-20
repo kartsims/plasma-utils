@@ -7,8 +7,18 @@
     "test": "./node_modules/.bin/mocha",
     "lint": "./node_modules/.bin/eslint src/ test/"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:plasma-group/plasma-core.git"
+  },
+  "keywords": [
+    "plasma"
+  ],
+  "author": "Plasma Group",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/plasma-group/plasma-core/issues"
+  },
   "dependencies": {
     "web3": "^1.0.0-beta.37"
   },
