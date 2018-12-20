@@ -1,11 +1,5 @@
 const web3 = require('web3')
-
-class Node {
-  constructor (data, sum) {
-    this.data = data
-    this.sum = sum
-  }
-}
+const MerkleTreeNode = require('./merkle-tree-node')
 
 class MerkleSumTree {
   constructor (leaves) {
@@ -13,10 +7,7 @@ class MerkleSumTree {
       leaves = []
     }
 
-    leaves = leaves.map((leaf) => {
-      return new Node(this.hash(leaf.data), leaf.sum)
-    })
-
+    leaves = this.parseLeaves(leaves)
     this.levels = this.generate(leaves, [leaves])
   }
 
@@ -28,8 +19,18 @@ class MerkleSumTree {
     return web3.utils.sha3(value).slice(2)
   }
 
+  parseLeaves (leaves) {
+    return leaves.map((leaf) => {
+      return new MerkleTreeNode(this.hash(leaf.data), leaf.sum)
+    })
+  }
+
+  emptyLeaf () {
+    return new MerkleTreeNode(0, 0)
+  }
+
   innerParent (left, right) {
-    return new Node(this.hash(left.data + right.data), (left.sum + right.sum))
+    return new MerkleTreeNode(this.hash(left.data + right.data), (left.sum + right.sum))
   }
 
   leafParent (left, right) {
@@ -44,7 +45,7 @@ class MerkleSumTree {
     let parents = []
     for (let i = 0; i < children.length; i += 2) {
       let left = children[i]
-      let right = (i + 1 === children.length) ? new Node(0, 0) : children[i + 1]
+      let right = (i + 1 === children.length) ? this.emptyLeaf() : children[i + 1]
       let parent = (levels.length === 1) ? this.leafParent(left, right) : this.innerParent(left, right)
       parents.push(parent)
     }
