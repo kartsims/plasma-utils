@@ -33,7 +33,7 @@ describe('PlasmaMerkleSumTree', function () {
       }
     ])
     const root = tree.root()
-    assert.strictEqual(root.data, '48c01c280e10f6722e4c2679c01f5290a70ee2c0f60b7850abab69f87eea0b7f')
+    assert.strictEqual(root.data, '48c01c280e10f6722e4c2679c01f5290a70ee2c0f60b7850abab69f87eea0b7f0000000000000005')
     assert.strictEqual(root.sum, 5)
   })
   it('should generate an odd tree correctly', function () {
@@ -55,7 +55,7 @@ describe('PlasmaMerkleSumTree', function () {
       }
     ])
     const root = tree.root()
-    assert.strictEqual(root.data, '317f97485179d95bf1dd71492f80b10e9d8a40cbbebc445d15d0edd5697fff3c')
+    assert.strictEqual(root.data, '4743dab225c9e25efbc2c49e30e942da5259b3090b58b88586de5a3d238b3afc000000000000000B')
     assert.strictEqual(root.sum, 11)
   })
 })

@@ -15,7 +15,7 @@ describe('MerkleSumTree', function () {
       }
     ])
     const root = tree.root()
-    assert.strictEqual(root.data, '06b3dfaec148fb1bb2b066f10ec285e7c9bf402ab32aa78a5d38e34566810cd2')
+    assert.strictEqual(root.data, '06b3dfaec148fb1bb2b066f10ec285e7c9bf402ab32aa78a5d38e34566810cd20000000000000001')
     assert.strictEqual(root.sum, 1)
   })
   it('should generate an even tree correctly', function () {
@@ -30,7 +30,7 @@ describe('MerkleSumTree', function () {
       }
     ])
     const root = tree.root()
-    assert.strictEqual(root.data, '8fe4d16a1b991fd49c07d938b5af69e2d82a0424471cbcaa4045994dc21a0b90')
+    assert.strictEqual(root.data, '2b4f9a6acea717fe0fb4bd5b7c0aaf5f09a7926db5f7f11fcfc648b0880feb7e0000000000000003')
     assert.strictEqual(root.sum, 3)
   })
   it('should generate an odd tree correctly', function () {
@@ -49,7 +49,7 @@ describe('MerkleSumTree', function () {
       }
     ])
     const root = tree.root()
-    assert.strictEqual(root.data, '896ba16210f322a4c07819c09b9d33f60dc640a2ffd7e6b77967d6bf1f18e058')
+    assert.strictEqual(root.data, '7167636a248d9bb01310035817ec800400a43bfb598faea5aa9c162b23596f4b0000000000000006')
     assert.strictEqual(root.sum, 6)
   })
 })
