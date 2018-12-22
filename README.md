@@ -1,1 +1,1 @@
-# plasma-core
+# plasma-utils
