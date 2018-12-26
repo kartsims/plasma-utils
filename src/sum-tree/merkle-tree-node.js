@@ -1,9 +1,9 @@
-const utils = require('../utils')
+BN = require('web3').utils.BN
 
 class MerkleTreeNode {
   constructor (data, sum) {
-    this.data = data + utils.int32ToHex(sum)
-    this.sum = sum
+    this.sum = new BN(sum)
+    this.data = data + this.sum.toString(16,2 * 16) // 2*bytes = num chars in hex 
   }
 }
 
