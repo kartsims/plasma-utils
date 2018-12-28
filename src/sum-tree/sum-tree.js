@@ -26,7 +26,7 @@ class MerkleSumTree {
   }
 
   emptyLeaf () {
-    return new MerkleTreeNode(0, 0)
+    return new MerkleTreeNode('0000000000000000000000000000000000000000000000000000000000000000', 0)
   }
 
   parent (left, right) {
