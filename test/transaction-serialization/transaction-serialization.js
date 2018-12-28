@@ -100,7 +100,7 @@ const genRandomTR = function () {
     end = coinID1
   }
   const block = genRandomArrayOfNBytes(32)
-  const TR = new TS.SimpleSerializableElement([sender, recipient, type, start, end, block], TS.schemas.TransferRecord)
+  const TR = new TS.TR([sender, recipient, type, start, end, block])
   return TR
 }
 
