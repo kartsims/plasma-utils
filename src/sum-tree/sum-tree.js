@@ -6,9 +6,9 @@ class MerkleSumTree {
     if (!leaves) {
       leaves = []
     }
-
-    leaves = this.parseLeaves(leaves)
-    this.levels = this.generate(leaves, [leaves])
+    this.leaves = leaves
+    let bottom = this.parseLeaves(leaves)
+    this.levels = this.generate(bottom, [bottom])
   }
 
   root () {
@@ -30,7 +30,7 @@ class MerkleSumTree {
   }
 
   parent (left, right) {
-    return new MerkleTreeNode(this.hash(left.data + right.data), (left.sum.add(right.sum)))
+    return new MerkleTreeNode(this.hash('0x' + left.data + right.data), (left.sum.add(right.sum)))
   }
 
   generate (children, levels) {

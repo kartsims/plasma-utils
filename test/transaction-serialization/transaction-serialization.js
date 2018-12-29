@@ -18,7 +18,6 @@ describe('TransactionSerialization', function () {
   const correctTRListEncoding = [3, 0, 0, 100].concat(tr1ProperEncoding).concat(tr2ProperEncoding).concat(tr1ProperEncoding)
   const correctSigListEncoding = [3, 0, 0, 96].concat(sig1ProperEncoding).concat(sig2ProperEncoding).concat(sig1ProperEncoding)
   const TX = new TS.Transaction(trList, sigList)
-  debugger
   const correctTXEncoding = correctTRListEncoding.concat(correctSigListEncoding)
   it('should well-encode a TransferRecord', function () {
     assert.deepEqual(tr1.encode(), tr1ProperEncoding)
