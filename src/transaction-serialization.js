@@ -238,8 +238,6 @@ class TRList {
   }
 }
 
-debugger
-
 class Sig {
   constructor(arg) {
   if (arg.length === getfieldsTotalBytes(schemas.Signature.fields)) { // it's an encoding
@@ -295,8 +293,6 @@ const decodeTransaction = function (encoding) {
   const sigList = decodeList(sigSlice, schemas.Signature)
   return new Transaction(TRList, sigList)
 }
-
-debugger
 
 module.exports = {
   schemas,

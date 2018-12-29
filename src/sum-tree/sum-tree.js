@@ -4,11 +4,13 @@ const MerkleTreeNode = require('./merkle-tree-node')
 class MerkleSumTree {
   constructor (leaves) {
     if (!leaves) {
-      leaves = []
+      this.leaves = []
+      this.levels = this.generate([], [[]])
+    } else {
+      this.leaves = leaves
+      let bottom = this.parseLeaves(leaves)
+      this.levels = this.generate(bottom, [bottom])
     }
-    this.leaves = leaves
-    let bottom = this.parseLeaves(leaves)
-    this.levels = this.generate(bottom, [bottom])
   }
 
   root () {
