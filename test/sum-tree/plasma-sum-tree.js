@@ -33,7 +33,7 @@ describe('PlasmaMerkleSumTree', function () {
   it('should generate an odd tree w/ multiple types correctly', function () {
     const tree = new PlasmaMerkleSumTree([TX1, TX2, TX3])
     const root = tree.root()
-    debugger
+    tree.getBranch(2) // 2: 2 --> 0 -> 0, 3: 2 0 0, 4: 4, 2, 0, 5: 4 2 0 6: 6, 3.2 0
     assert.strictEqual(root.data, '53b9d5ee2f4899976fc22da622f299f6a62bfa0cc2edd2da3ca608a776a315e4' + '0000000100000000000000000000006d')
     // assert.deepEqual(root.sum, new BN(11))
   })
