@@ -19,19 +19,19 @@ class PlasmaMerkleSumTree extends MerkleSumTree {
       leaves[i].range = leaves[i+1].typedStart.sub(leaves[i].typedStart)
     }
     return leaves.map((leaf) => {
-      return new MerkleTreeNode(leaf.data, leaf.range)
+      return new MerkleTreeNode(this.hash(leaf.TXData), leaf.range)
     })
   }
 
   getBranch(leafIndex) {
     if (leafIndex >= this.levels[0].length || leafIndex < 0) {throw new Error('invalid branch index requested')}
-    // let path = new BN(leafIndex).toString(2, this.levels.length-1)
     let proof = []
-    let nodeIndex = Math.floor((leafIndex + 1) / 2) * 2
+    let nodeIndex = Math.floor(leafIndex / 2) * 2
     for (let i = 0; i < this.levels.length; i++) {
+      debugger
       proof.push(this.levels[i][nodeIndex])
       proof.push(this.levels[i][nodeIndex+1])
-      nodeIndex = Math.floor(nodeIndex / 2)
+      nodeIndex = Math.floor(nodeIndex / 4) * 2
     }
     return proof.map((node) => {
       return (node === undefined) ? this.emptyLeaf() : node
