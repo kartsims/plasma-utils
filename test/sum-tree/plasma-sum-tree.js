@@ -21,21 +21,18 @@ describe('PlasmaMerkleSumTree', function () {
   it('should generate a single-leaf tree correctly', function () {
     const tree = new PlasmaMerkleSumTree([TX1])
     const root = tree.root()
-    assert.strictEqual(root.data, '351a7a2ec4f370b6d2eea2199516c22f5582bf37b4a54173ca5abbca3d0a9c65' + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-    // assert.deepEqual(root.sum, new BN(4))
+    assert.strictEqual(root.data, '351a7a2ec4f370b6d2eea2199516c22f5582bf37b4a54173ca5abbca3d0a9c65' + 'ffffffffffffffffffffffffffffffff')
   })
   it('should generate an even tree correctly', function () {
     const tree = new PlasmaMerkleSumTree([TX1, TX2])
     const root = tree.root()
-    assert.strictEqual(root.data, '80d452a7f386d2f79cabe5e4d73c2cc40d9708f2d3e30f78324076ba9c654c80' + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-    // assert.deepEqual(root.sum, new BN(8))
+    assert.strictEqual(root.data, 'beec6525a226cfc4e7494f14960aeaf4ce826f8998e675fbf58d07b89d0d2749' + 'ffffffffffffffffffffffffffffffff')
   })
   it('should generate an odd tree w/ multiple types correctly', function () {
     const tree = new PlasmaMerkleSumTree([TX1, TX2, TX3])
     const root = tree.root()
-    tree.getBranch(2) // 2: 2 --> 0 -> 0, 3: 2 0 0, 4: 4, 2, 0, 5: 4 2 0 6: 6, 3.2 0
-    assert.strictEqual(root.data, '53b9d5ee2f4899976fc22da622f299f6a62bfa0cc2edd2da3ca608a776a315e4' + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-    // assert.deepEqual(root.sum, new BN(11))
+    debugger
+    assert.strictEqual(root.data, '26fa704d04daeef66fa9b5c89486813ad0697002cc6b82b52b8377b9fb7c28d4' + 'ffffffffffffffffffffffffffffffff')
   })
   it('should succeed in generating a tree of 100 ordered transactions', function () {
     const TXs = DT.genNSequentialTransactions(100)

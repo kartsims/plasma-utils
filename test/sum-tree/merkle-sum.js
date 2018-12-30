@@ -49,7 +49,7 @@ describe('MerkleSumTree', function () {
       }
     ])
     const root = tree.root()
-    assert.strictEqual(root.data, '7c0beda9f03a56707c7c57f60be76210516dd4bb756b5c5f331676f761eaf987' + '00000000000000000000000000000006')
+    assert.strictEqual(root.data, 'b6e37356622cb2200b5086a628339f78a2de407223c5b4cb1c69c850dbeff1ae' + '00000000000000000000000000000006')
     assert.deepEqual(root.sum, new BN(6))
   })
 })
