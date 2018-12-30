@@ -28,7 +28,6 @@ class MerkleSumTree {
   }
 
   emptyLeaf () {
-    debugger
     return new MerkleTreeNode('0x0000000000000000000000000000000000000000000000000000000000000000', 0)
   }
 
@@ -46,7 +45,6 @@ class MerkleSumTree {
       let left = children[i]
       let right = (i + 1 === children.length) ? this.emptyLeaf() : children[i + 1]
       let parent = this.parent(left, right)
-      debugger
       parents.push(parent)
     }
 
