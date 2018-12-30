@@ -13,8 +13,8 @@ class PlasmaMerkleSumTree extends MerkleSumTree {
         encoding: '0x' + new BN(enc).toString(16, 2 * enc.length)
       }
     })
-    leaves[0].start = 0 // start of the leaf's coverage is 0 to the sum tree, even if TR is not
-    leaves.push({typedStart: new BN('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',16)}) // add a fake final TR which happens at the final coinpost
+    leaves[0].typedStart = new BN(0) // start of the leaf's coverage is 0 to the sum tree, even if TR is not
+    leaves.push({typedStart: new BN('ffffffffffffffffffffffffffffffff',16)}) // add a fake final TR which happens at the final coinpost
     let parsed = []
     for (let i = 0; i < leaves.length - 1; i++) {
       let range = leaves[i+1].typedStart.sub(leaves[i].typedStart)
@@ -23,12 +23,11 @@ class PlasmaMerkleSumTree extends MerkleSumTree {
     return parsed
   }
 
-  getBranch(leafIndex) {
+  getBranch(leafIndex) { // returns an array of nodes which can be use to verify the merkle branch
     if (leafIndex >= this.levels[0].length || leafIndex < 0) {throw new Error('invalid branch index requested')}
     let proof = []
     let nodeIndex = Math.floor(leafIndex / 2) * 2
     for (let i = 0; i < this.levels.length; i++) {
-      debugger
       proof.push(this.levels[i][nodeIndex])
       proof.push(this.levels[i][nodeIndex+1])
       nodeIndex = Math.floor(nodeIndex / 4) * 2

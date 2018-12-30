@@ -272,7 +272,7 @@ class SigList {
 class Transaction {
   constructor (TRs, sigs) {
     if (typeof sigs === 'undefined') { // then it's just been passed an encoding
-      return decodeTransaction(TRs) // TRList is actually the encoding
+      return decodeTransaction(TRs) // TRs is actually the encoding
     }
       this.transferRecords = new TRList(TRs)
       this.signatures = new SigList(sigs)
