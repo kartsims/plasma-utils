@@ -31,12 +31,10 @@ describe('PlasmaMerkleSumTree', function () {
   it('should generate an odd tree w/ multiple types correctly', function () {
     const tree = new PlasmaMerkleSumTree([TX1, TX2, TX3])
     const root = tree.root()
-    debugger
     assert.strictEqual(root.data, '26fa704d04daeef66fa9b5c89486813ad0697002cc6b82b52b8377b9fb7c28d4' + 'ffffffffffffffffffffffffffffffff')
   })
   it('should succeed in generating a tree of 100 ordered transactions', function () {
     const TXs = DT.genNSequentialTransactions(100)
     assert.doesNotThrow(function () {return new PlasmaMerkleSumTree(TXs)})
-    debugger
   })
 })
