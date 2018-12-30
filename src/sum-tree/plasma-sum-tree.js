@@ -5,22 +5,22 @@ const BN = require('web3').utils.BN
 class PlasmaMerkleSumTree extends MerkleSumTree {
   parseLeaves (leaves) {
     leaves = leaves.map((leaf) => {
-      let enc = leaf.encode()
       let TR = leaf.transferRecords.elements[leaf.TRIndex]
+      let enc = leaf.encode()
       return {
-        data: this.hash('0x' + new BN(enc).toString(16, 2 * enc.length)),
-        typedStart: TR.type.toString(16, 8) + TR.start.toString(16, 24),
-        typedEnd: TR.type.toString(16, 8) + TR.end.toString(16, 24)
+        typedStart: new BN(TR.type.toString(16, 8) + TR.start.toString(16, 24), 16),
+        typedEnd: new BN(TR.type.toString(16, 8) + TR.end.toString(16, 24), 16),
+        encoding: '0x' + new BN(enc).toString(16, 2 * enc.length)
       }
     })
     leaves[0].start = 0 // start of the leaf's coverage is 0 to the sum tree, even if TR is not
     leaves.push({typedStart: new BN('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',16)}) // add a fake final TR which happens at the final coinpost
+    let parsed = []
     for (let i = 0; i < leaves.length - 1; i++) {
-      leaves[i].range = leaves[i+1].typedStart.sub(leaves[i].typedStart)
+      let range = leaves[i+1].typedStart.sub(leaves[i].typedStart)
+      parsed.push(new MerkleTreeNode(this.hash(leaves[i].encoding), range))
     }
-    return leaves.map((leaf) => {
-      return new MerkleTreeNode(this.hash(leaf.TXData), leaf.range)
-    })
+    return parsed
   }
 
   getBranch(leafIndex) {
