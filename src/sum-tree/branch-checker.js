@@ -1,4 +1,3 @@
-const assert = require('chai').assert
 const BN = require('web3').utils.BN
 const PlasmaMerkleSumTree = new require('./sum-tree')
 const ST = new PlasmaMerkleSumTree()
