@@ -5,7 +5,7 @@ const BN = require('web3').utils.BN
 class PlasmaMerkleSumTree extends MerkleSumTree {
   parseLeaves (leaves) {
     leaves = leaves.map((leaf) => {
-      let TR = leaf.transferRecords.elements[leaf.TRIndex]
+      let TR = leaf.transfers.elements[leaf.TRIndex]
       let enc = leaf.encode()
       return {
         typedStart: new BN(TR.type.toString(16, 8) + TR.start.toString(16, 24), 16),

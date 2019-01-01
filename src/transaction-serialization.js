@@ -7,8 +7,10 @@ const isSerializableList = function (potentialList) {
 
 const isSignatureList = function (potentialSigList) {
   const isList = isSerializableList(potentialSigList)
-  const areSignatures = potentialSigList.elementsType === 'Signature'
-  return isList && areSignatures
+  if (isList) {
+    return potentialSigList.elementsType === 'Signature'
+  }
+  return false
 }
 
 const isTransferList = function (potentialTransferList) {
@@ -221,8 +223,9 @@ class TR {
         arg.sender, arg.recipient, arg.type, arg.start, arg.end, arg.block
       ], schemas.TransferRecord)
     }
-    thisTR.typedStart = new BN(thisTR.type.toString(16, 8) + thisTR.start.toString(16, 24), 16),
-    thisTR.typedEnd = new BN(thisTR.type.toString(16, 8) + thisTR.end.toString(16, 24), 16),
+    thisTR.typedStart = new BN(thisTR.type.toString(16, 8) + thisTR.start.toString(16, 24), 16)
+    thisTR.typedEnd = new BN(thisTR.type.toString(16, 8) + thisTR.end.toString(16, 24), 16)
+    return thisTR
   }
 }
 
@@ -231,7 +234,13 @@ class TRList {
     if (isTransferList(TRs)) {
       return TRs
     } else if (TRs instanceof Array && typeof TRs[0] === 'number') {
-      return decodeList(TRs, schemas.TransferRecord)
+      let serList = decodeList(TRs, schemas.TransferRecord)
+      serList.elements = serList.elements.map((transfer) => {
+        transfer.typedStart = new BN(transfer.type.toString(16, 8) + transfer.start.toString(16, 24), 16)
+        transfer.typedEnd = new BN(transfer.type.toString(16, 8) + transfer.end.toString(16, 24), 16)
+        return transfer
+      })
+      return serList
     } else if (!(TRs[0] instanceof SimpleSerializableElement)) {
       TRs = TRs.map((transfer) => {
         return new TR(transfer)
@@ -276,14 +285,13 @@ class Transaction {
   constructor (TRs, sigs) {
     let thisTransaction = {}
     if (typeof sigs === 'undefined') { // then it's just been passed an encoding
-      thisTransaction = decodeTransaction(TRs) // TRs is actually the encoding
+      return decodeTransaction(TRs) // TRs is actually the encoding
     }
-      thisTransaction.transfers = new TRList(TRs)
-      thisTransaction.signatures = new SigList(sigs)
-      return thisTransaction
+      this.transfers = new TRList(TRs)
+      this.signatures = new SigList(sigs)
   }
   encode () {
-    return this.transferRecords.encode().concat(this.signatures.encode())
+    return this.transfers.encode().concat(this.signatures.encode())
   }
 }
 
@@ -294,7 +302,12 @@ const decodeTransaction = function (encoding) {
   if (numTRs !== numSigs) {throw new Error('oops-- badly formed transaction encoding')}
   const TRSlice = encoding.slice(0, totalTRBytes) // first totalTRBytes
   const sigSlice = encoding.slice(totalTRBytes) // this gets the rest
-  const TRList = decodeList(TRSlice, schemas.TransferRecord)
+  let TRList = decodeList(TRSlice, schemas.TransferRecord)
+  TRList.elements = TRList.elements.map((transfer) => {
+    transfer.typedStart = new BN(transfer.type.toString(16, 8) + transfer.start.toString(16, 24), 16)
+    transfer.typedEnd = new BN(transfer.type.toString(16, 8) + transfer.end.toString(16, 24), 16)
+    return transfer
+  })
   const sigList = decodeList(sigSlice, schemas.Signature)
   return new Transaction(TRList, sigList)
 }

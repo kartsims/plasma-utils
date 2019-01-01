@@ -33,7 +33,7 @@ const genSequentialTR = function (prevTR) {
 }
 
 const genSequentialTransaction = function (prevTransaction) {
-  const TRList = new TS.TRList([genSequentialTR(prevTransaction.transferRecords.elements[0])])
+  const TRList = new TS.TRList([genSequentialTR(prevTransaction.transfers.elements[0])])
   return new TS.Transaction(TRList, [genRandomSignature()])
 }
 

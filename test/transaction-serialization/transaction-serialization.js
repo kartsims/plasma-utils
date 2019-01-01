@@ -4,7 +4,7 @@ const TS = require('../../src/transaction-serialization')
 const Web3 = require('web3')
 const BN = Web3.utils.BN
 
-describe('TransactionSerialization', function () {
+describe.only('TransactionSerialization', function () {
   const tr1 = new TS.TR(['0x43aaDF3d5b44290385fe4193A1b13f15eF3A4FD5', '0xa12bcf1159aa01c739269391ae2d0be4037259f3', 1, 2, 3, 4])
   const tr1ProperEncoding = [67, 170, 223, 61, 91, 68, 41, 3, 133, 254, 65, 147, 161, 177, 63, 21, 239, 58, 79, 213, 161, 43, 207, 17, 89, 170, 1, 199, 57, 38, 147, 145, 174, 45, 11, 228, 3, 114, 89, 243, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4]
   const tr2 = new TS.TR(['0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8', '0xa12bcf1159aa01c739269391ae2d0be4037259f4', 2, 3, 4, 5])
@@ -72,6 +72,7 @@ describe('TransactionSerialization', function () {
     const sigList = new TS.SigList(signatures)
     const transaction = new TS.Transaction(TRList, sigList)
     const encoding = transaction.encode()
+    debugger
     const decoding = new TS.Transaction(encoding)
     assert.deepEqual(transaction, decoding)
   })
