@@ -209,17 +209,20 @@ let schemas = {
 
 class TR {
   constructor(arg) {
+    let thisTR = {}
     if (arg.length === getfieldsTotalBytes(schemas.TransferRecord.fields)) { // it's an encoding
-      return decodeElement(arg, schemas.TransferRecord)
+      thisTR = decodeElement(arg, schemas.TransferRecord)
     } else if (arg instanceof SimpleSerializableElement) { // already a TR
-      return arg
+      thisTR = arg
     } else if (arg instanceof Array) { // ordered array of elements
-      return new SimpleSerializableElement(arg, schemas.TransferRecord)
+      thisTR = new SimpleSerializableElement(arg, schemas.TransferRecord)
     } else {
-      return new SimpleSerializableElement([
+      thisTR = new SimpleSerializableElement([
         arg.sender, arg.recipient, arg.type, arg.start, arg.end, arg.block
       ], schemas.TransferRecord)
     }
+    thisTR.typedStart = new BN(thisTR.type.toString(16, 8) + thisTR.start.toString(16, 24), 16),
+    thisTR.typedEnd = new BN(thisTR.type.toString(16, 8) + thisTR.end.toString(16, 24), 16),
   }
 }
 
@@ -271,11 +274,13 @@ class SigList {
 
 class Transaction {
   constructor (TRs, sigs) {
+    let thisTransaction = {}
     if (typeof sigs === 'undefined') { // then it's just been passed an encoding
-      return decodeTransaction(TRs) // TRs is actually the encoding
+      thisTransaction = decodeTransaction(TRs) // TRs is actually the encoding
     }
-      this.transferRecords = new TRList(TRs)
-      this.signatures = new SigList(sigs)
+      thisTransaction.transfers = new TRList(TRs)
+      thisTransaction.signatures = new SigList(sigs)
+      return thisTransaction
   }
   encode () {
     return this.transferRecords.encode().concat(this.signatures.encode())
